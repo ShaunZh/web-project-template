@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import plugin from './plugins/inject'
+
+// 注入插件
+Vue.use(plugin)
 
 Vue.config.productionTip = false
 
