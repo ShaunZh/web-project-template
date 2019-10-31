@@ -145,7 +145,8 @@ module.exports = {
           require('postcss-pxtorem')({
             // 把px单位换算成rem单位
             rootValue: 16, // 换算的基数(设计图750的根字体为32)
-            selectorBlackList: ['weui', 'mu', /^html$/], // 忽略转换正则匹配项
+            // 忽略进行转化的规则 https://github.com/cuth/postcss-pxtorem
+            selectorBlackList: ['vant-', 'ignore', /^html$/],
             propList: ['*']
           })
         ]
