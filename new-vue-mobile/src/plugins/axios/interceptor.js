@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2019-10-30 14:59:31
  * @LastEditors: Hexon
- * @LastEditTime: 2019-10-30 15:22:15
+ * @LastEditTime: 2019-11-20 11:12:10
  */
 import store from '@/store'
 import { getToken } from '@/utils/auth'
@@ -68,12 +68,12 @@ export function responseSuccessFunc(response) {
 }
 
 export function responseFailFunc(error) {
-  console.log('err' + error) // for debug
-  // Message.closeAll()
-  // Message({
-  //   message: error.message,
-  //   type: 'error',
-  //   duration: 2 * 1000
-  // })
+  console.log('responseFail: ' + error.message) // for debug
+
+  if (error.code === 'ECONNABORTED') {
+    // Toast.fail('请求超时')
+  } else {
+    // Toast.fail(error.message)
+  }
   return Promise.reject(error)
 }
