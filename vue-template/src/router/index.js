@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import { routerBeforeEachFunc, routerAfterEachFunc } from './interceptor'
 
 Vue.use(VueRouter)
 
@@ -23,5 +24,8 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+router.beforeEach(routerBeforeEachFunc)
+router.afterEach(routerAfterEachFunc)
 
 export default router
