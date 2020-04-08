@@ -17,5 +17,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode", // 默认使用prettier格式化
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
-  }
+  },
+  "cSpell.words": [
+    "vant"
+  ]
 }
