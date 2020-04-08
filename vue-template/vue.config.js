@@ -1,5 +1,6 @@
 const path = require('path')
-let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// webpack打包文件分析
+// let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -28,29 +29,29 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-  devServer: {
-    port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    proxy: {
-      '^/': {
-        target: '', // 涟哥服务器
-        changeOrigin: true,
-        pathRewrite: {
-          '^/': ''
-        }
-      }
-    }
-    // after: require('./mock/mock-server.js')
-  },
+  // devServer: {
+  //   port: port,
+  //   open: true,
+  //   overlay: {
+  //     warnings: false,
+  //     errors: true
+  //   },
+  //   proxy: {
+  //     '^/': {
+  //       target: '', // 涟哥服务器
+  //       changeOrigin: true,
+  //       pathRewrite: {
+  //         '^/': ''
+  //       }
+  //     }
+  //   }
+  //   // after: require('./mock/mock-server.js')
+  // },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
-    name: name,
-    plugins: [new BundleAnalyzerPlugin()]
+    name: name
+    // plugins: [new BundleAnalyzerPlugin()]
   },
   chainWebpack(config) {
     config.plugins.delete('preload')
