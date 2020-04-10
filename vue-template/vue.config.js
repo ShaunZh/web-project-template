@@ -29,24 +29,24 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-  // devServer: {
-  //   port: port,
-  //   open: true,
-  //   overlay: {
-  //     warnings: false,
-  //     errors: true
-  //   },
-  //   proxy: {
-  //     '^/': {
-  //       target: '', // 涟哥服务器
-  //       changeOrigin: true,
-  //       pathRewrite: {
-  //         '^/': ''
-  //       }
-  //     }
-  //   }
-  //   // after: require('./mock/mock-server.js')
-  // },
+  devServer: {
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    proxy: {
+      '^/api': {
+        target: 'http://localhost:3333', // 涟哥服务器
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+    // after: require('./mock/mock-server.js')
+  },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
@@ -57,10 +57,7 @@ module.exports = {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
 
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
