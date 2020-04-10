@@ -4,6 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import plugins from './plugins/inject'
+import './plugins/vant'
 // 全局css
 import './assets/styles/index.scss'
 import './icons' // icon
