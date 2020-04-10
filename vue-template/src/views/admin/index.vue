@@ -1,0 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: Hexon
+ * @Date: 2020-04-09 14:08:37
+ * @LastEditors: Hexon
+ * @LastEditTime: 2020-04-09 14:09:06
+ -->
+<template>
+  <div class="page-admin">管理员页面-需要权限的页面</div>
+</template>
