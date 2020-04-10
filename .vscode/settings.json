@@ -6,6 +6,10 @@
     "vue",
     "typescript",
     "typescriptreact"
+    // {
+    //   "language": "vue",
+    //   "autoFix": true
+    // }
   ],
   // vscode 插件 prettier-code formatter : 保存时修复错误
   "editor.codeActionsOnSave": {
@@ -18,7 +22,5 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "cSpell.words": [
-    "vant"
-  ]
+  "cSpell.words": ["vant"]
 }
