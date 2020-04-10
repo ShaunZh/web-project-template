@@ -1,23 +1,26 @@
 module.exports = {
-  extends: [
-      'alloy',
-      'alloy/vue',
-  ],
+  extends: ['alloy', 'alloy/vue'],
   env: {
-      // Your environments (which contains several predefined global variables)
-      //
-      // browser: true,
-      // node: true,
-      // mocha: true,
-      // jest: true,
-      // jquery: true
+    // Your environments (which contains several predefined global variables)
+    //
+    // browser: true,
+    // node: true,
+    // mocha: true,
+    // jest: true,
+    // jquery: true
   },
   globals: {
-      // Your global variables (setting to false means it's not allowed to be reassigned)
-      //
-      // myGlobal: false
+    // Your global variables (setting to false means it's not allowed to be reassigned)
+    //
+    // myGlobal: false
   },
   rules: {
-      // Customize your rules
+    // Customize your rules
+    'vue/component-tags-order': [
+      'error',
+      {
+        order: ['template', 'script', 'style']
+      }
+    ]
   }
-};
+}
