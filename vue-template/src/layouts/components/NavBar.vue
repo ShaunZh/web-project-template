@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-09 16:51:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-10 15:37:58
+ * @LastEditTime: 2020-04-10 17:40:31
  -->
 <template>
   <van-tabbar v-model="active" @change="onChange">
@@ -42,7 +42,9 @@ export default {
       const routesList = ['/', '/list/index', '/admin/dataAnalysis', '/my/index']
 
       console.log('e', e)
-      this.$router.push(routesList[e])
+      this.$router.push(routesList[e]).catch((err) => {
+        console.error(err.message)
+      })
     }
   }
 }
