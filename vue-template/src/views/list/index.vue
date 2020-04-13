@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-10 17:40:39
+ * @LastEditTime: 2020-04-13 16:04:43
  -->
 <template>
   <div class="page-list">
@@ -28,11 +28,13 @@
 
 <script>
 import { search as VanSearch, List as VanList } from 'vant'
+import mixinBackLastPos from '@/mixins/backLastPos'
 import listApi from './service'
 import ListItem from './components/ListItem'
 export default {
   name: 'List',
   components: { ListItem, VanList, VanSearch },
+  mixins: [mixinBackLastPos],
 
   data() {
     return {
@@ -51,8 +53,9 @@ export default {
     }
   },
   created() {
-    // this.onLoadList()
+    console.log('created')
   },
+
   methods: {
     // 懒加载视频
     onSearch() {},
