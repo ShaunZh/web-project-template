@@ -46,8 +46,8 @@ const actions = {
         .then(() => {
           resolve()
         })
-        .catch(() => {
-          reject()
+        .catch((err) => {
+          reject(err)
         })
     })
   },

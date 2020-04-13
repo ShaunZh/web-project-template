@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-09 15:29:40
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-10 16:51:31
+ * @LastEditTime: 2020-04-13 15:24:35
  -->
 <template>
   <section class="app-main">
@@ -19,27 +19,19 @@
 export default {
   name: 'AppMain',
   data() {
-    return {
-      keepAliveRoute: [],
-      key: ''
+    return {}
+  },
+  computed: {
+    keepAliveRoute() {
+      return this.$store.getters.keepAliveRoute
+    },
+    key() {
+      return this.$store.getters.keepALiveKey
     }
   },
 
-  watch: {
-    $route(to, from) {
-      // 如果 要 to(进入) 的页面是需要 keepAlive 缓存的，把 name push 进 include数组
-      if (to.meta.keepAlive) {
-        !this.keepAliveRoute.includes(to.name) && this.keepAliveRoute.push(to.name)
-      }
-      // 如果 要 form(离开) 的页面是 keepAlive缓存的，
-      // 再根据 deepth 来判断是前进还是后退
-      // 如果是后退
-      if (from.meta.keepAlive && to.meta.deepth < from.meta.deepth) {
-        let index = this.keepAliveRoute.indexOf(from.name)
-        index !== -1 && this.keepAliveRoute.splice(index, 1)
-      }
-      this.key = to.path
-    }
+  methods: {
+    initActiveNavTab(routePath) {}
   }
 }
 </script>

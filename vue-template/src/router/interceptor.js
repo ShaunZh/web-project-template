@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2019-10-30 14:56:21
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-08 18:22:41
+ * @LastEditTime: 2020-04-13 15:53:53
  */
 
 import store from '@/store'
@@ -20,14 +20,22 @@ export function routerBeforeEachFunc(to, from, next) {
   next()
 }
 
-export function routerAfterEachFunc(to) {
-  // console.log('to', to)
+export function routerAfterEachFunc(to, from) {
   to.meta.title && (document.title = to.meta.title)
-  // 全局注入分享参数
-  // if (to.path !== '/pm/detail' && to.path !== '/practice/detail') {
-  //   // 部分详情页会自定义分享链接
-  //   resetShareParams(to.fullPath)
-  // }
-  // 页面跳转触发事件给app.vue，用于计算导航信息
-  // gGlobal.vbus.$emit('router.update', to.path)
+
+  // ----- keep alive 处理
+  const routeInfo = {
+    to: {
+      keepAlive: to.meta.keepAlive,
+      name: to.name
+    },
+    from: {
+      keepAlive: from.meta.keepAlive,
+      name: from.name
+    }
+  }
+
+  store.commit('ui/KEEP_ALIVE_ROUTE', routeInfo)
+
+  // ----  keep alive 处理 - end -----
 }

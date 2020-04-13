@@ -21,10 +21,12 @@ Vue.use(Router)
     roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    // noCache: true                if set true, the page will no be cached(default is false)
+    // affix: true                  if set true, the tag will affix in the tags-view
+    // breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    // activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    keepAlive: // 是否使用keep-alive缓存页面 
+    deepth: // deepth字段主要是用于进行keep-alive处理，需要缓存的页面设置1，不需缓存的页面为0.5， 缓存页面的子页面为2
   }
  */
 
@@ -32,16 +34,23 @@ export const constantRoutes = [
   {
     path: '/',
     component: BasicLayout,
+    meta: {
+      icon: 'ic-home'
+    },
     children: [
       {
         path: '',
         name: 'Home',
-        component: home
+        component: home,
+        meta: {
+          deepth: 0.5
+        }
       }
     ]
   },
   {
     path: '/user',
+    hidden: true,
     // component: BlankLayout,
     children: [
       {
@@ -64,19 +73,26 @@ export const constantRoutes = [
   {
     path: '/list',
     component: BasicLayout,
+    meta: {
+      icon: 'ic-list'
+    },
     children: [
       {
         path: 'index',
         name: 'List',
-        // meta: {
-        //   // keepAlive: true
-        // },
+        meta: {
+          keepAlive: true,
+          deepth: 1 // deepth字段主要是用于进行keep-alive处理的
+        },
         component: () => import(/* webpackChunkName:  "list" */ '../views/list/index.vue')
       },
       {
         path: 'detail',
         name: 'ListItemDetail',
-        component: () => import(/* webpackChunkName: "listItemDetail" */ '../views/list/detail.vue')
+        component: () => import(/* webpackChunkName: "listItemDetail" */ '../views/list/detail.vue'),
+        meta: {
+          deepth: 2
+        }
       },
       {
         path: 'edit',
@@ -93,6 +109,7 @@ export const constantRoutes = [
   {
     path: '/search',
     name: 'Search',
+    hidden: true,
     component: () => import(/* webpackChunkName: "search " */ '../views/search/index.vue')
   },
   {
@@ -102,19 +119,26 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'My',
-        component: () => import(/* webpackChunkName: "my" */ '../views/my/index.vue')
+        component: () => import(/* webpackChunkName: "my" */ '../views/my/index.vue'),
+        meta: {
+          deepth: 0.5
+        }
       }
     ]
   },
   {
     path: '/admin',
     component: BasicLayout,
+    meta: {
+      icon: 'ic-admin'
+    },
     children: [
       {
         path: 'dataAnalysis',
         name: 'DataAnalysis',
         meta: {
-          roles: ['admin']
+          roles: ['admin'],
+          deepth: 0.5
         },
         component: () => import(/* webpackChunkName: "admin" */ '../views/admin/index.vue')
       }
@@ -128,7 +152,7 @@ const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
     // 当切换新路由时，页面滚动到顶部
-    scrollBehavior: () => ({ y: 0 }),
+    // scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
   })
 
