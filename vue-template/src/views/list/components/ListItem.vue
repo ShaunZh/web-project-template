@@ -3,19 +3,22 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:57
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-10 16:48:21
+ * @LastEditTime: 2020-04-14 18:42:39
  -->
 <template>
   <div class="list-item">
-    <div class="img-wrap">
+    <div class="img-wrap" @click="$emit('deail')">
       <img v-lazy="itemData.imgSrc" class="img" alt="img" />
     </div>
     <h5 class="title" v-text="itemData.title"></h5>
     <div class="bottom">
-      <div class="left">
+      <div class="left single-line-hidden">
         <img v-lazy="itemData.avatar" alt="avatar" class="avatar" />
         <span class="med-font-size username" v-text="itemData.username"></span>
         <span class="small-font-size" v-text="itemData.depart"></span>
+      </div>
+      <div class="right">
+        <span class="small-font-size operate" @click="$emit('edit')">编辑</span>
       </div>
     </div>
   </div>
@@ -82,6 +85,7 @@ export default {
     align-items: center;
     background-color: #fff;
     .left {
+      width: 80%;
       .avatar {
         margin-left: 12px;
         width: 24px;
@@ -92,6 +96,15 @@ export default {
       .username {
         margin-left: 7px;
         margin-right: 4px;
+      }
+    }
+    .right {
+      display: flex;
+      justify-content: flex-end;
+      .operate {
+        padding: 3px 8px;
+        border-radius: 8px;
+        border: 1px solid #42b983;
       }
     }
   }

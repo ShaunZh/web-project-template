@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-13 16:04:43
+ * @LastEditTime: 2020-04-14 18:41:59
  -->
 <template>
   <div class="page-list">
@@ -19,8 +19,8 @@
       :offset="50"
       @load="onLoadList"
     >
-      <div v-for="(item, index) in list" :key="index" class="item" @click="onClick(index)">
-        <ListItem :itemData="item"></ListItem>
+      <div v-for="(item, index) in list" :key="index" class="item">
+        <ListItem :itemData="item" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
       </div>
     </van-list>
   </div>
@@ -31,6 +31,7 @@ import { search as VanSearch, List as VanList } from 'vant'
 import mixinBackLastPos from '@/mixins/backLastPos'
 import listApi from './service'
 import ListItem from './components/ListItem'
+import { setInfoToSession, getInfoFromSession, removeInfoFromSession } from './utils'
 export default {
   name: 'List',
   components: { ListItem, VanList, VanSearch },
@@ -56,8 +57,12 @@ export default {
     console.log('created')
   },
 
+  activated() {
+    // 用于处理从编辑页面和新建页面返回到当前页面，当在编辑页面和新增页面操作成功时，需要写入success到session中
+    this.dealBack()
+  },
+
   methods: {
-    // 懒加载视频
     onSearch() {},
     // 滚动加载
     onLoadList() {
@@ -92,8 +97,64 @@ export default {
           this.error = true
         })
     },
-    onClick(index) {
-      this.$router.push('/list/detail').catch((err) => {
+    // 从编辑页面、新建页面和详情页面返回到当前页面时的处理函数
+    async dealBack() {
+      const info = getInfoFromSession()
+      if (info) {
+        const { success, index, type } = info
+        // 编辑页面返回时，如果编辑成功，则需要更新指定项的数据
+        if (success && type === 'edit') {
+          await this.updateItem(index)
+          removeInfoFromSession()
+        } else if (success && type === 'create') {
+          // 新建页面返回时，如果新建成功，则需要重新加载数据
+          await this.reloadData()
+          removeInfoFromSession()
+        }
+      }
+    },
+    // 重新加载数据
+    async reloadData() {
+      this.filterOptions.curPage = 1
+      this.list = []
+      await this.onLoadList()
+    },
+    // 更新列表中索引为index项目
+    async updateItem(index) {
+      await listApi
+        .detail({
+          number: this.list[index].number
+        })
+        .then((res) => {
+          this.$set(this.list, index, res.result)
+        })
+    },
+    /**
+     * @description: 进入编辑页面
+     * @param {number}index: 编辑项的索引
+     * @return:
+     */
+    onEdit(index) {
+      const info = {
+        type: 'edit',
+        index
+      }
+      setInfoToSession(info)
+      this.$router.push({ path: '/list/edit', query: { number: this.list[index].number } })
+    },
+    // 进入新建页面
+    onCreate() {
+      const info = {
+        type: 'create'
+      }
+      setInfoToSession(info)
+      this.$router.push('/list/create').catch((err) => {
+        console.error(err.message)
+      })
+    },
+    // 进入详情
+    onDetail(index) {
+      this.$router.push({ path: '/list/detail', query: { number: this.list[index].number } }).catch((err) => {
         console.error(err.message)
       })
     }

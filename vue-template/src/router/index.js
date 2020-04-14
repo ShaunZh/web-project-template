@@ -100,9 +100,9 @@ export const constantRoutes = [
         component: () => import(/* webpackChunkName: "listItemEdit" */ '../views/list/edit.vue')
       },
       {
-        path: 'add',
-        name: 'ListItemAdd',
-        component: () => import(/* webpackChunkName: "listItemAdd" */ '../views/list/add.vue')
+        path: 'create',
+        name: 'ListItemCreate',
+        component: () => import(/* webpackChunkName: "listItemCreate" */ '../views/list/create.vue')
       }
     ]
   },

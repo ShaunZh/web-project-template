@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '^/api': {
-        target: 'http://localhost:3333', // 涟哥服务器
+        target: 'http://localhost:3333',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
