@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-09 14:40:54
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-14 18:47:16
+ * @LastEditTime: 2020-04-15 14:26:03
  -->
 
 <template>
@@ -128,7 +128,8 @@
       </van-cell-group>
     </div>
     <div class="btn-wrap">
-      <VanButton :disabled="submitting" class="submit-btn" type="primary" @click="onSubmit">提交</VanButton>
+      <button class="btn" type="default" @click="onCancel">取消</button>
+      <VanButton :disabled="submitting" class="btn" type="info" @click="onSubmit">提交</VanButton>
     </div>
     <!-- ---- end form  -->
 
@@ -332,7 +333,7 @@ export default {
           })
       }
     },
-    // 获取表单项选项内容
+    // 获取表单项选项内容，如下拉列表选项
     getOptionsData() {},
 
     // 省市区处理函数
@@ -345,7 +346,7 @@ export default {
       this.form.date = e
       this.pickerShow.date = false
     },
-    // 下拉选项
+    // 下拉处理函数
     onSelectPicker(e) {
       this.form.select = e
       this.pickerShow.select = false
@@ -402,11 +403,11 @@ export default {
         .then((res) => {
           this.$toast.success(this.operate === 'create' ? '发布成功' : '编辑成功')
           // 返回
-          this.$router.back()
           this.submitting = false
           this.showSubmitLoading = false
           clearTimeout(timerId)
           this.addSuccessToSession()
+          this.$router.back()
         })
         .catch(() => {
           this.submitting = false
@@ -416,9 +417,12 @@ export default {
     },
     // 操作成功时添加成功信息到session中，供list页面使用
     addSuccessToSession() {
-      const info = JSON.parse(getInfoFromSession())
+      const info = getInfoFromSession()
       info.success = 'success'
       setInfoToSession(info)
+    },
+    onCancel() {
+      this.$router.back()
     }
   }
 }
@@ -445,6 +449,14 @@ export default {
   justify-content: flex-end;
   /deep/ .van-checkbox {
     margin-left: 14px;
+  }
+}
+.btn-wrap {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  .btn:nth-child(2) {
+    margin-left: 10px;
   }
 }
 </style>
