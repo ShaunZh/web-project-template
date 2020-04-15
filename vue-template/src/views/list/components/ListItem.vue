@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:57
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-14 18:42:39
+ * @LastEditTime: 2020-04-15 14:32:17
  -->
 <template>
   <div class="list-item">
@@ -85,7 +85,8 @@ export default {
     align-items: center;
     background-color: #fff;
     .left {
-      width: 80%;
+      width: calc(100% - 52px);
+      text-align: left;
       .avatar {
         margin-left: 12px;
         width: 24px;
