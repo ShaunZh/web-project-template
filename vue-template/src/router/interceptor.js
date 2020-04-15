@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2019-10-30 14:56:21
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-13 15:53:53
+ * @LastEditTime: 2020-04-15 17:55:29
  */
 
 import store from '@/store'
@@ -27,10 +27,12 @@ export function routerAfterEachFunc(to, from) {
   const routeInfo = {
     to: {
       keepAlive: to.meta.keepAlive,
+      deepth: to.meta.deepth,
       name: to.name
     },
     from: {
       keepAlive: from.meta.keepAlive,
+      deepth: from.meta.deepth,
       name: from.name
     }
   }
