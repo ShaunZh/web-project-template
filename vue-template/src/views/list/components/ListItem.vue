@@ -3,12 +3,12 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:57
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-15 14:32:17
+ * @LastEditTime: 2020-04-15 18:09:29
  -->
 <template>
   <div class="list-item">
     <div class="img-wrap" @click="$emit('deail')">
-      <img v-lazy="itemData.imgSrc" class="img" alt="img" />
+      <img v-lazy="itemData.imgSrc" class="item-img" alt="img" />
     </div>
     <h5 class="title" v-text="itemData.title"></h5>
     <div class="bottom">
@@ -63,7 +63,7 @@ export default {
   box-shadow: 0 2px 6px 0 rgba(7, 2, 27, 0.12);
 
   .img-wrap {
-    min-height: 142px;
+    height: 142px;
     .item-img {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;

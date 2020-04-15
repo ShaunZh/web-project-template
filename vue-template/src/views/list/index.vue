@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-15 16:08:14
+ * @LastEditTime: 2020-04-15 18:11:10
  -->
 <template>
   <div class="page-list">
@@ -61,7 +61,7 @@ export default {
   mounted() {
     document.addEventListener('scroll', this.$refs['scrollTop'].onScroll)
   },
-  destroyed() {
+  beforeDestroy() {
     document.removeEventListener('scroll', this.$refs['scrollTop'].onScroll)
   },
 

@@ -38,8 +38,8 @@ export default {
 }
 .ic-back-top {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 70px;
+  right: 12px;
   width: 36px;
   height: 36px;
   color: #cdcdcd;
