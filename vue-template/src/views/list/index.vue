@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-14 18:41:59
+ * @LastEditTime: 2020-04-15 16:08:14
  -->
 <template>
   <div class="page-list">
@@ -23,18 +23,20 @@
         <ListItem :itemData="item" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
       </div>
     </van-list>
+    <ScrollTop ref="scrollTop"></ScrollTop>
   </div>
 </template>
 
 <script>
 import { search as VanSearch, List as VanList } from 'vant'
 import mixinBackLastPos from '@/mixins/backLastPos'
+import ScrollTop from '@/components/ScrollTop'
 import listApi from './service'
 import ListItem from './components/ListItem'
 import { setInfoToSession, getInfoFromSession, removeInfoFromSession } from './utils'
 export default {
   name: 'List',
-  components: { ListItem, VanList, VanSearch },
+  components: { ListItem, VanList, VanSearch, ScrollTop },
   mixins: [mixinBackLastPos],
 
   data() {
@@ -55,6 +57,12 @@ export default {
   },
   created() {
     console.log('created')
+  },
+  mounted() {
+    document.addEventListener('scroll', this.$refs['scrollTop'].onScroll)
+  },
+  destroyed() {
+    document.removeEventListener('scroll', this.$refs['scrollTop'].onScroll)
   },
 
   activated() {
