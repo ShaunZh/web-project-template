@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-09 16:51:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-10 17:40:31
+ * @LastEditTime: 2020-04-16 18:20:57
  -->
 <template>
   <van-tabbar v-model="active" @change="onChange">
@@ -37,11 +37,27 @@ export default {
       active: 0
     }
   },
+  created() {
+    this.initActiveNav()
+  },
+
   methods: {
+    // 初始化页面时，激活tab
+    initActiveNav() {
+      const { path } = this.$route
+      if (path === '/') {
+        this.active = 0
+      } else if (path.indexOf('/list') >= 0) {
+        this.active = 1
+      } else if (path.indexOf('/admin') >= 0) {
+        this.active = 2
+      } else if (path.indexOf('/my') >= 0) {
+        this.active = 3
+      }
+    },
     onChange(e) {
       const routesList = ['/', '/list/index', '/admin/dataAnalysis', '/my/index']
 
-      console.log('e', e)
       this.$router.push(routesList[e]).catch((err) => {
         console.error(err.message)
       })
