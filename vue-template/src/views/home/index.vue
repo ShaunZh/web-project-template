@@ -2,16 +2,21 @@
   <div class="home">
     <div class="swipe-wrap">
       <Swipe :imagesList="swipeImages" @click="handleSwipeClick"></Swipe>
+      <van-panel title="表单" desc="包括图片上传">
+        <router-link to="/form">表单</router-link>
+      </van-panel>
     </div>
   </div>
 </template>
 
 <script>
 import Swipe from '@/components/Swipe'
+import { Panel as VanPanel } from 'vant'
 export default {
   name: 'Home',
   components: {
-    Swipe
+    Swipe,
+    VanPanel
   },
   data() {
     return {
