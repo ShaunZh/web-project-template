@@ -97,7 +97,10 @@ export const constantRoutes = [
       {
         path: 'edit',
         name: 'ListItemEdit',
-        component: () => import(/* webpackChunkName: "listItemEdit" */ '../views/list/edit.vue')
+        component: () => import(/* webpackChunkName: "listItemEdit" */ '../views/list/edit.vue'),
+        meta: {
+          deepth: 2
+        }
       },
       {
         path: 'create',
@@ -105,6 +108,12 @@ export const constantRoutes = [
         component: () => import(/* webpackChunkName: "listItemCreate" */ '../views/list/create.vue')
       }
     ]
+  },
+  {
+    path: '/form',
+    name: 'FormPage',
+    hidden: true,
+    component: () => import(/* webpackChunkName: "form" */ '../views/form/index.vue')
   },
   {
     path: '/search',

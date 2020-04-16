@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-08 18:01:03
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-08 18:23:21
+ * @LastEditTime: 2020-04-16 17:16:10
  */
 
 import WxAuth from 'wxtoken'
@@ -17,7 +17,7 @@ export const authHttp = () => {
   return WxInstance.wxAuth(loginApi.wxGetJsapiSignature, loginApi.wxGetAuth, {
     // auth：为调用微信授权接口的请求参数
     auth: {
-      code: searchParams.code,
+      code: searchParams.code || undefined,
       type: 'parent',
       clientKey: searchParams.clientKey || ''
     },

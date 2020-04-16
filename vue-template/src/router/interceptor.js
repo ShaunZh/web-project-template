@@ -3,21 +3,34 @@
  * @Author: Hexon
  * @Date: 2019-10-30 14:56:21
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-15 17:55:29
+ * @LastEditTime: 2020-04-16 17:08:23
  */
 
 import store from '@/store'
-import { WxInstance } from '@/utils/wxAuth'
+import { authHttp, WxInstance } from '@/utils/wxAuth'
 
 export function routerBeforeEachFunc(to, from, next) {
-  const token = WxInstance.getAuthFromSession()
-  // 如果token不存在，则获取token信息
-  if (!token) {
-    store.dispatch('user/login')
-  } else {
-    // 已经授权，则判断是否有用户信息，如果没有则获取用户信息
-  }
-  next()
+  authHttp()
+    .then((res) => {
+      // 已授权
+      if (res.status === 'authed') {
+        // 判断是否已经获取了用户信息，如果没有获取，则在此处获取
+      } else if (res.status === 'failed') {
+        // 表示授权失败
+        // eslint-disable-next-line no-invalid-this
+        this.$toast.fail(res.message)
+      }
+      next()
+    })
+    .catch(() => {
+      // 如果是生产环境，则需要重定向到微信授权页面，进入到此处，说明url上没有code，session中也没有token
+      if (process.env.NODE_ENV === 'production') {
+        WxInstance.wxAuthRedirect()
+      } else {
+        // 开发环境，可以在此处写入token信息到session中
+        next()
+      }
+    })
 }
 
 export function routerAfterEachFunc(to, from) {
