@@ -3,32 +3,40 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-15 18:11:10
+ * @LastEditTime: 2020-04-16 15:40:43
  -->
 <template>
   <div class="page-list">
-    <van-search v-model="filterOptions.keywords" placeholder="搜索" show-action shape="round" @search="onSearch">
-    </van-search>
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      :error.sync="error"
-      finished-text="没有更多了"
-      error-text="请求失败，点击重新加载"
-      class="list"
-      :offset="50"
-      @load="onLoadList"
-    >
-      <div v-for="(item, index) in list" :key="index" class="item">
-        <ListItem :itemData="item" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
-      </div>
-    </van-list>
-    <ScrollTop ref="scrollTop"></ScrollTop>
+    <van-pull-refresh v-model="loading" @refresh="reloadData">
+      <van-search
+        v-model="filterOptions.keywords"
+        placeholder="搜索"
+        show-action
+        shape="round"
+        @focus="$router.push('/search')"
+      >
+      </van-search>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        :error.sync="error"
+        finished-text="没有更多了"
+        error-text="请求失败，点击重新加载"
+        class="list"
+        :offset="50"
+        @load="onLoadList"
+      >
+        <div v-for="(item, index) in list" :key="index" class="item">
+          <ListItem :itemData="item" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
+        </div>
+      </van-list>
+      <ScrollTop ref="scrollTop"></ScrollTop>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
-import { search as VanSearch, List as VanList } from 'vant'
+import { search as VanSearch, List as VanList, PullRefresh as VanPullRefresh } from 'vant'
 import mixinBackLastPos from '@/mixins/backLastPos'
 import ScrollTop from '@/components/ScrollTop'
 import listApi from './service'
@@ -36,7 +44,7 @@ import ListItem from './components/ListItem'
 import { setInfoToSession, getInfoFromSession, removeInfoFromSession } from './utils'
 export default {
   name: 'List',
-  components: { ListItem, VanList, VanSearch, ScrollTop },
+  components: { ListItem, VanList, VanSearch, ScrollTop, VanPullRefresh },
   mixins: [mixinBackLastPos],
 
   data() {
@@ -124,9 +132,9 @@ export default {
     // 重新加载数据
     async reloadData() {
       this.filterOptions.curPage = 1
-      this.list = []
       await this.onLoadList()
     },
+
     // 更新列表中索引为index项目
     async updateItem(index) {
       await listApi
