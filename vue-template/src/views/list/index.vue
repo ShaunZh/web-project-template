@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-16 15:40:43
+ * @LastEditTime: 2020-04-16 17:35:19
  -->
 <template>
   <div class="page-list">
@@ -13,7 +13,7 @@
         placeholder="搜索"
         show-action
         shape="round"
-        @focus="$router.push('/search')"
+        @focus="$router.push('/list/search')"
       >
       </van-search>
       <van-list
@@ -27,7 +27,7 @@
         @load="onLoadList"
       >
         <div v-for="(item, index) in list" :key="index" class="item">
-          <ListItem :itemData="item" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
+          <ListItem :itemData="item" :loading="loading" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
         </div>
       </van-list>
       <ScrollTop ref="scrollTop"></ScrollTop>

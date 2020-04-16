@@ -3,32 +3,40 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:57
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-15 18:09:29
+ * @LastEditTime: 2020-04-16 17:55:02
  -->
 <template>
   <div class="list-item">
     <div class="img-wrap" @click="$emit('deail')">
-      <img v-lazy="itemData.imgSrc" class="item-img" alt="img" />
+      <VanSkeleton :loading="loading" :row="4">
+        <img v-lazy="itemData.imgSrc" class="item-img" alt="img" />
+      </VanSkeleton>
     </div>
+    <!-- <VanSkeleton :loading="loading" :row="1"> -->
     <h5 class="title" v-text="itemData.title"></h5>
+    <!-- </VanSkeleton> -->
     <div class="bottom">
-      <div class="left single-line-hidden">
-        <img v-lazy="itemData.avatar" alt="avatar" class="avatar" />
-        <span class="med-font-size username" v-text="itemData.username"></span>
-        <span class="small-font-size" v-text="itemData.depart"></span>
-      </div>
-      <div class="right">
-        <span class="small-font-size operate" @click="$emit('edit')">编辑</span>
-      </div>
+      <VanSkeleton :loading="loading" :row="1" avatar title>
+        <div class="left single-line-hidden">
+          <img v-lazy="itemData.avatar" alt="avatar" class="avatar" />
+          <span class="med-font-size username" v-text="itemData.username"></span>
+          <span class="small-font-size" v-text="itemData.depart"></span>
+        </div>
+        <div class="right">
+          <span class="small-font-size operate" @click="$emit('edit')">编辑</span>
+        </div>
+      </VanSkeleton>
     </div>
   </div>
 </template>
 
 <script>
+import { Skeleton as VanSkeleton } from 'vant'
 export default {
   name: 'ComPmAndPracticeList',
-  components: {},
+  components: { VanSkeleton },
   props: {
+    loading: Boolean,
     itemData: {
       type: Object,
       default: {

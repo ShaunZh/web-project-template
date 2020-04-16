@@ -106,6 +106,15 @@ export const constantRoutes = [
         path: 'create',
         name: 'ListItemCreate',
         component: () => import(/* webpackChunkName: "listItemCreate" */ '../views/list/create.vue')
+      },
+      {
+        path: 'search',
+        name: 'Search',
+        hidden: true,
+        meta: {
+          deepth: 2
+        },
+        component: () => import(/* webpackChunkName: "search " */ '../views/search/index.vue')
       }
     ]
   },
@@ -115,12 +124,7 @@ export const constantRoutes = [
     hidden: true,
     component: () => import(/* webpackChunkName: "form" */ '../views/form/index.vue')
   },
-  {
-    path: '/search',
-    name: 'Search',
-    hidden: true,
-    component: () => import(/* webpackChunkName: "search " */ '../views/search/index.vue')
-  },
+
   {
     path: '/my',
     component: BasicLayout,
