@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-17 14:55:02
+ * @LastEditTime: 2020-04-17 16:55:37
  -->
 <template>
   <div class="page-list">
@@ -16,20 +16,27 @@
         @focus="$router.push('/list/search')"
       >
       </van-search>
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        :error.sync="error"
-        finished-text="没有更多了"
-        error-text="请求失败，点击重新加载"
-        class="list"
-        :offset="50"
-        @load="onLoadList"
-      >
-        <div v-for="(item, index) in list" :key="index" class="item">
-          <ListItem :itemData="item" :loading="loading" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
-        </div>
-      </van-list>
+      <!-- 通过sticky属性可以开启粘性布局，粘性布局下，当 Tab 滚动到顶部时会自动吸顶 -->
+      <van-tabs :sticky="true">
+        <van-tab title="标签 1">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            :error.sync="error"
+            finished-text="没有更多了"
+            error-text="请求失败，点击重新加载"
+            class="list"
+            :offset="50"
+            @load="onLoadList"
+          >
+            <div v-for="(item, index) in list" :key="index" class="item">
+              <ListItem :itemData="item" :loading="loading" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
+            </div>
+          </van-list>
+        </van-tab>
+        <van-tab title="标签 2">内容 2</van-tab>
+      </van-tabs>
+
       <back-to-top
         :custom-style="myBackToTopStyle"
         :visibility-height="300"
@@ -41,7 +48,13 @@
 </template>
 
 <script>
-import { search as VanSearch, List as VanList, PullRefresh as VanPullRefresh } from 'vant'
+import {
+  search as VanSearch,
+  List as VanList,
+  PullRefresh as VanPullRefresh,
+  Tabs as VanTabs,
+  Tab as VanTab
+} from 'vant'
 import mixinBackLastPos from '@/mixins/backLastPos'
 import BackToTop from '@/components/BackToTop'
 import listApi from './service'
@@ -49,7 +62,7 @@ import ListItem from './components/ListItem'
 import { setInfoToSession, getInfoFromSession, removeInfoFromSession } from './utils'
 export default {
   name: 'List',
-  components: { ListItem, VanList, VanSearch, BackToTop, VanPullRefresh },
+  components: { ListItem, VanList, VanSearch, BackToTop, VanPullRefresh, VanTabs, VanTab },
   mixins: [mixinBackLastPos],
 
   data() {
