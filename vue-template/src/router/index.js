@@ -148,12 +148,12 @@ export const constantRoutes = [
     children: [
       {
         path: 'dataAnalysis',
-        name: 'DataAnalysis',
+        name: 'Echarts',
         meta: {
           roles: ['admin'],
           deepth: 0.5
         },
-        component: () => import(/* webpackChunkName: "admin" */ '../views/admin/index.vue')
+        component: () => import(/* webpackChunkName: "admin" */ '../views/admin/echarts.vue')
       }
     ]
   }
