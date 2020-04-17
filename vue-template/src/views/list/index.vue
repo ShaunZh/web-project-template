@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-16 17:35:19
+ * @LastEditTime: 2020-04-17 14:55:02
  -->
 <template>
   <div class="page-list">
@@ -30,7 +30,12 @@
           <ListItem :itemData="item" :loading="loading" @edit="onEdit(index)" @detail="onDetail(index)"></ListItem>
         </div>
       </van-list>
-      <ScrollTop ref="scrollTop"></ScrollTop>
+      <back-to-top
+        :custom-style="myBackToTopStyle"
+        :visibility-height="300"
+        :back-position="50"
+        transition-name="fade"
+      />
     </van-pull-refresh>
   </div>
 </template>
@@ -38,13 +43,13 @@
 <script>
 import { search as VanSearch, List as VanList, PullRefresh as VanPullRefresh } from 'vant'
 import mixinBackLastPos from '@/mixins/backLastPos'
-import ScrollTop from '@/components/ScrollTop'
+import BackToTop from '@/components/BackToTop'
 import listApi from './service'
 import ListItem from './components/ListItem'
 import { setInfoToSession, getInfoFromSession, removeInfoFromSession } from './utils'
 export default {
   name: 'List',
-  components: { ListItem, VanList, VanSearch, ScrollTop, VanPullRefresh },
+  components: { ListItem, VanList, VanSearch, BackToTop, VanPullRefresh },
   mixins: [mixinBackLastPos],
 
   data() {
@@ -60,18 +65,27 @@ export default {
         keywords: '',
         curPage: 1,
         pageSize: 10
+      },
+      myBackToTopStyle: {
+        right: '20px',
+        bottom: '70px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
+        background: '#e7eaf1' // 按钮的背景颜色 The background color of the button
       }
     }
   },
   created() {
     console.log('created')
   },
-  mounted() {
-    document.addEventListener('scroll', this.$refs['scrollTop'].onScroll)
-  },
-  beforeDestroy() {
-    document.removeEventListener('scroll', this.$refs['scrollTop'].onScroll)
-  },
+  // mounted() {
+  //   document.addEventListener('scroll', this.$refs['scrollTop'].onScroll)
+  // },
+  // beforeDestroy() {
+  //   document.removeEventListener('scroll', this.$refs['scrollTop'].onScroll)
+  // },
 
   activated() {
     // 用于处理从编辑页面和新建页面返回到当前页面，当在编辑页面和新增页面操作成功时，需要写入success到session中
