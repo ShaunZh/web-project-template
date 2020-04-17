@@ -3,11 +3,11 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:57
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-16 17:55:02
+ * @LastEditTime: 2020-04-17 16:37:21
  -->
 <template>
   <div class="list-item">
-    <div class="img-wrap" @click="$emit('deail')">
+    <div class="img-wrap" @click="$emit('detail')">
       <VanSkeleton :loading="loading" :row="4">
         <img v-lazy="itemData.imgSrc" class="item-img" alt="img" />
       </VanSkeleton>
