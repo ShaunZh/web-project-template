@@ -58,4 +58,4 @@
   - [x] echarts
 
 - 优化
-  - [ ] 页面过渡效果优化（[添加转场动画](https://juejin.im/post/5ba358a56fb9a05d2068401d)）
+  - [x] 页面过渡简单效果
