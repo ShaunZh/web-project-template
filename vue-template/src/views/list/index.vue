@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-10 13:49:50
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-17 16:55:37
+ * @LastEditTime: 2020-04-20 14:03:57
  -->
 <template>
   <div class="page-list">
@@ -17,7 +17,7 @@
       >
       </van-search>
       <!-- 通过sticky属性可以开启粘性布局，粘性布局下，当 Tab 滚动到顶部时会自动吸顶 -->
-      <van-tabs :sticky="true">
+      <van-tabs v-model="activeTab" :sticky="true">
         <van-tab title="标签 1">
           <van-list
             v-model="loading"
@@ -70,6 +70,7 @@ export default {
       loading: false, // 加载状态
       finished: false, // 加载完成状态
       error: false, // 是否加载失败，
+      activeTab: 0, // 当前激活的tab
 
       total: 0,
       list: [],
@@ -91,15 +92,9 @@ export default {
     }
   },
   created() {
+    this.onLoadList()
     console.log('created')
   },
-  // mounted() {
-  //   document.addEventListener('scroll', this.$refs['scrollTop'].onScroll)
-  // },
-  // beforeDestroy() {
-  //   document.removeEventListener('scroll', this.$refs['scrollTop'].onScroll)
-  // },
-
   activated() {
     // 用于处理从编辑页面和新建页面返回到当前页面，当在编辑页面和新增页面操作成功时，需要写入success到session中
     this.dealBack()
