@@ -1,9 +1,11 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Text, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { add, minus, asyncAdd } from '../../actions/counter'
+import { add, minus, asyncAdd } from '@/actions/counter'
+import { HomeStateType } from '@/reducers/home'
+import * as actions from '@/actions/home'
 
 import './index.scss'
 
@@ -17,20 +19,34 @@ import './index.scss'
 //
 // #endregion
 
-type PageStateProps = {
-  counter: {
-    num: number
+// TODO: 需要找到counter、home的类型
+const mapStateToProps = ({ counter, home }: { counter: any; home: HomeStateType }) => ({
+  counter,
+  home
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  add() {
+    dispatch(add())
+  },
+  dec() {
+    dispatch(minus())
+  },
+  asyncAdd() {
+    dispatch(asyncAdd())
+  },
+  dispatchHome(option) {
+    dispatch(actions.fetchHome(option))
   }
-}
+})
+// 此为通过connect注入的redux store
+type PageStateProps = ReturnType<typeof mapStateToProps>
+type PageDispatchProps = ReturnType<typeof mapDispatchToProps>
 
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
-
+// 此为父组件传入的props
 type PageOwnProps = {}
 
+// 此为页面state
 type PageState = {}
 
 type IProps = PageStateProps & PageDispatchProps & PageOwnProps
@@ -39,22 +55,7 @@ interface Index {
   props: IProps
 }
 
-@connect(
-  ({ counter }) => ({
-    counter
-  }),
-  (dispatch) => ({
-    add() {
-      dispatch(add())
-    },
-    dec() {
-      dispatch(minus())
-    },
-    asyncAdd() {
-      dispatch(asyncAdd())
-    }
-  })
-)
+@connect(mapStateToProps, mapDispatchToProps)
 class Index extends Component {
   /**
    * 指定config的类型声明为: Taro.Config
@@ -77,6 +78,14 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  onHandleSearch = (e) => {
+    this.props.dispatchHome({
+      filterOptions: {
+        keywords: e.target.value
+      }
+    })
+  }
+
   render() {
     return (
       <View className='index'>
@@ -86,10 +95,17 @@ class Index extends Component {
         <Button className='dec_btn' onClick={this.props.dec}>
           -
         </Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>
+        <Button className='dec_btn' onClick={this.props.dispatchHome}>
           async
         </Button>
         <View>
+          <Input
+            type='text'
+            placeholder='将会获取焦点'
+            focus
+            value={this.props.home.filterOptions.keywords}
+            onInput={this.onHandleSearch}
+          />
           <Text>{this.props.counter.num}</Text>
         </View>
         <View>
@@ -107,4 +123,4 @@ class Index extends Component {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>
+export default Index as ComponentClass<IProps, PageState>
