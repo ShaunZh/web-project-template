@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-23 10:20:41
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-24 14:10:32
+ * @LastEditTime: 2020-04-27 17:36:34
  */
 import Taro from '@tarojs/taro'
 import { HTTP_STATUS } from '../constants/status'
@@ -49,11 +49,23 @@ export default {
       // mode: 'cors',
       xhrFields: { withCredentials: true },
       success(res) {
-        // if user login
-        if (url === API_USER_LOGIN) {
-          Taro.setStorageSync('Authorization', res.data)
+        const { code, message = '请求异常' } = res
+        if (code !== HTTP_STATUS.SUCCESS) {
+          if (showToast) {
+            Taro.showToast({
+              title: message,
+              icon: 'none'
+            })
+          }
+          logError('api-', url, message)
+          return Promise.reject({ message })
+        } else {
+          // 如果是登录接口，则存储授权信息
+          if (url === API_USER_LOGIN) {
+            Taro.setStorageSync('Authorization', res.data.Authorization)
+          }
+          return res.data
         }
-        return res.data
       },
       error(err) {
         const defaultMsg = err.code === HTTP_STATUS.AUTHENTICATE ? '登录失效' : '请求异常'
@@ -68,7 +80,7 @@ export default {
             url: '/pages/user-login/user-login'
           })
         }
-        logError('api', '请求接口出现问题', err)
+        logError('api-', url, err)
         return Promise.reject({ message: defaultMsg, ...err })
       }
     }
