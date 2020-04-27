@@ -56,7 +56,7 @@ interface Index {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-class Index extends Component {
+class Index extends Component<IProps, PageState> {
   /**
    * 指定config的类型声明为: Taro.Config
    *

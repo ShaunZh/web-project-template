@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2020-04-23 11:06:33
  * @LastEditors: Hexon
- * @LastEditTime: 2020-04-23 14:41:58
+ * @LastEditTime: 2020-04-26 18:29:38
  */
 
 /**
@@ -24,7 +24,7 @@ export const CDN = 'https://yanxuan.nosdn.127.net'
 
 // home
 export const API_HOME = `${host}/xhr/index/index.json`
-export const API_HOME_SEARCH_COUNT = `${host}/xhr/search/displayBar.json`
+export const API_HOME_SEARCH = `${host}/xhr/search/displayBar.json`
 export const API_HOME_PIN = `${hostM}/pin/min/item/recommend.json`
 export const API_HOME_RECOMMEND = `${host}/xhr/rcmd/index.json`
 
