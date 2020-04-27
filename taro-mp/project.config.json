@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "taro-mp",
-  "description": "taro微信小程序",
-  "appid": "touristappid",
+  "projectname": "Guitar Cat",
+  "description": "Guitar Playground",
+  "appid": "wx4c7c5121cc721948",
   "setting": {
     "urlCheck": true,
     "es6": false,
