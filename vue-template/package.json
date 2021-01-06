@@ -9,7 +9,7 @@
     "deploy": "npm run build && node ./deploy/index.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "echarts": "^4.7.0",
     "register-service-worker": "^1.6.2",
