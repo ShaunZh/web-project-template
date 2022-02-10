@@ -38,7 +38,7 @@
     "koa-router": "^8.0.8",
     "koa2-cors": "^2.0.6",
     "mockjs": "^1.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "postcss-pxtorem": "^5.1.1",
     "prettier": "^2.0.4",
     "sass-loader": "^8.0.2",
